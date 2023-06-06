@@ -54,8 +54,17 @@ mic_men <- function(x, Vmax, Km, reverse = FALSE) {
 #' @return Numeric values. Transformed values.
 #' @rdname adstocks
 #' @export
+#' Explanation: 
+#' The function first checks that the length of theta is 1 using the "stopifnot" function. 
+#' It then creates a new vector called "x_decayed", which is initialized with the first 
+#' value of x and then updated using a for loop to compute the adstock transformation for 
+#' each subsequent value of x.
+#' The function also creates a vector called "thetaVecCum" using another for loop, which 
+#' stores the cumulative theta values for each time period. This vector is
+#'  not used in the computation of the adstock transformation, but can be plotted to 
+#' visualize the decay rate.
 adstock_geometric <- function(x, theta) {
-  stopifnot(length(theta) == 1)
+  stopifnot(length(theta) == 1)  # check whether len(theta) == 1 
   if (length(x) > 1) {
     x_decayed <- c(x[1], rep(0, length(x) - 1))
     for (xi in 2:length(x_decayed)) {
@@ -360,6 +369,8 @@ plot_saturation <- function(plot = TRUE) {
     return(p1 + p2)
   }
 }
+
+####################################################################
 
 #### Transform media for model fitting
 run_transformations <- function(InputCollect, hypParamSam, adstock) {
